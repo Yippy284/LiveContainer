@@ -41,7 +41,7 @@ mv ./tmp/SideStoreSupport.framework Payload/LiveContainer.app/Frameworks
 
 # download SideStore
 cd tmp
-wget https://github.com/raj-sh-git/SideStore/releases/download/nightly/SideStore.ipa
+wget https://github.com/LiveContainer/SideStore/releases/download/nightly/SideStore.ipa
 unzip SideStore.ipa
 cd ..
 
@@ -72,15 +72,5 @@ find payloadlc/Payload -type d -name "_CodeSignature" -exec rm -r {} +
 
 ldid -S.github/sidelc/LiveWidgetExtension_adhoc.xml ./Payload/LiveContainer.app/PlugIns/LiveWidgetExtension.appex/LiveWidgetExtension
 
-# package full IPA
+# package
 zip -r "$scheme+SideStore.ipa" "Payload" -x "._*" -x ".DS_Store" -x "__MACOSX"
-
-# package 2-AppID variant (keep LiveProcess.appex only)
-rm -rf ./Payload/LiveContainer.app/PlugIns/LiveWidgetExtension.appex
-rm -rf ./Payload/LiveContainer.app/PlugIns/ShareExtension.appex
-rm -rf ./Payload/LiveContainer.app/PlugIns/LaunchAppExtension.appex
-zip -r "$scheme+SideStore-2AppID.ipa" "Payload" -x "._*" -x ".DS_Store" -x "__MACOSX"
-
-# package 1-AppID variant (remove all extensions)
-rm -rf ./Payload/LiveContainer.app/PlugIns/LiveProcess.appex
-zip -r "$scheme+SideStore-1AppID.ipa" "Payload" -x "._*" -x ".DS_Store" -x "__MACOSX"
